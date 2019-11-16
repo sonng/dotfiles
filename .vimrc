@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'racer-rust/vim-racer'
 Plugin 'rust-lang/rust.vim'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -32,6 +33,7 @@ filetype plugin indent on    " required
 
 set hidden
 let g:racer_cmd = "/home/son/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -82,9 +84,9 @@ set incsearch
 set lazyredraw
 
 " Show matching brackets when text indicator is over them
-set showmatch
+" set showmatch
 " How many tenths of a second to blink when matching brackets
-set mat=2
+" set mat=2
 
 " Enable syntax highlightning
 syntax enable
@@ -109,6 +111,7 @@ set smarttab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 
 " Linebreak on 500 characters
 set lbr
@@ -117,3 +120,6 @@ set tw=500
 set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
+
+" NERDTree
+map <C-n> :NERDTreeToggle<CR>
