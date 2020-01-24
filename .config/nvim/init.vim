@@ -48,6 +48,18 @@ set hidden
 let g:racer_cmd = "/home/son/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 
+" Language Client 
+let g:LanguageClient_serverCommands = {
+            \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+            \}
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+
+" Permanent undo
+set undodir=~/.vimdid
+set undofile
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
