@@ -16,6 +16,17 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'preservim/nerdtree'
 
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
+
+" Completion 
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'roxma/nvim-yarp'
+
 " All of your Plugins must be added before the following line
 call plug#end()            " required
 filetype plugin indent on    " required
@@ -53,6 +64,9 @@ nmap <leader>w :w!<cr>
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
+
+" Enable mouse usage (all modes) in terminals
+set mouse=a
 
 " Turn on the Wild Menu
 set wildmenu
@@ -123,9 +137,17 @@ set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
 
+if executable('rg')
+    set grepprg=rg\ --no-heading\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+endif
+
 " Open hotkeys
 map <C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>
+
+" Keymap for replacing up to next _ or -
+noremap <leader>m ct_
 
 
 " NERDTree
@@ -154,3 +176,19 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
+function! s:list_cmd()
+  let base = fnamemodify(expand('%', ':h:.:S')
+  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+endfunction
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+  \                               'options': '--tiebreak=index'}, <bang>0)
+
+" NCM2
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+
+inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
