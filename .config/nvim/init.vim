@@ -177,7 +177,7 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 function! s:list_cmd()
-  let base = fnamemodify(expand('%', ':h:.:S')
+  let base = fnamemodify(expand('%'), ':h:.:S')
   return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
 endfunction
 
