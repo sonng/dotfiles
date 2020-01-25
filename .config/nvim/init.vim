@@ -6,7 +6,11 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call plug#begin('~/.vim/plugged')
 
+Plug 'chriskempson/base16-vim'
+
 " GUI enchancements
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'machakann/vim-highlightedyank'
 Plug 'w0rp/ale'
 
@@ -47,6 +51,8 @@ filetype plugin indent on    " required
 set hidden
 let g:racer_cmd = "/home/son/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
+
+colorscheme base16-atelier-dune
 
 " Language Client 
 let g:LanguageClient_serverCommands = {
@@ -149,6 +155,9 @@ set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
 
+" Status bar
+set laststatus=2
+
 if executable('rg')
     set grepprg=rg\ --no-heading\ --vimgrep
     set grepformat=%f:%l:%c:%m
@@ -204,3 +213,6 @@ set completeopt=noinsert,menuone,noselect
 
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+
+" Air-line
+let g:airline#extensions#tabline#enabled = 1
