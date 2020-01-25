@@ -1,7 +1,6 @@
-alias vim='nvim'
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
+. ~/.config/fish/aliases.fish
 
 set PATH $HOME/.cargo/bin $PATH
-set VISUAL nvim
-set EDITOR $VISUAL
+set -gx VISUAL nvim
+set -gx EDITOR $VISUAL
 set TERM xterm-256color
