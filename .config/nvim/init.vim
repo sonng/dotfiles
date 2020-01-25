@@ -2,6 +2,10 @@ set shell=/bin/bash
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" With a map leader it's possible to do extra key combinations 
+" like <leader>w saves the current file
+let mapleader = ","
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call plug#begin('~/.vim/plugged')
@@ -10,8 +14,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'justinmk/vim-sneak'
 
 " GUI enchancements
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'chriskempson/base16-vim'
 Plug 'w0rp/ale'
@@ -50,19 +53,35 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-set hidden
-let g:racer_cmd = "/home/son/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+if !has('gui_running')
+    set t_Co=256
+endif
+set termguicolors
 
+set hidden
+
+" Base 16
 colorscheme base16-atelier-dune
 
-" Language Client 
-let g:LanguageClient_serverCommands = {
-            \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-            \}
+" Lightline
+let g:lightline = {
+    \ 'component_function': {
+    \   'filename': 'LightlineFilename',
+    \ },
+\ }
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+function! LightlineFilename()
+    return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 
+" Rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:rust_clip_command = 'xclip -selection clipboard'
+"let g:racer_cmd = "/home/son/.cargo/bin/racer"
+"let g:racer_experimental_completer = 1
+let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
 " Permanent undo
 set undodir=~/.vimdid
@@ -76,10 +95,6 @@ set number
 
 " Set to auto read when a file is changed from the outside
 set autoread
-
-" With a map leader it's possible to do extra key combinations 
-" like <leader>w saves the current file
-let mapleader = ","
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -185,6 +200,8 @@ nmap <leader>; :Buffers<CR>
 " Keymap for replacing up to next _ or -
 noremap <leader>m ct_
 
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
@@ -220,6 +237,7 @@ endfunction
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
   \                               'options': '--tiebreak=index'}, <bang>0)
+
 
 " Air-line
 let g:airline#extensions#tabline#enabled = 1
