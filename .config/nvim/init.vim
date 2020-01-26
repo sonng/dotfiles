@@ -115,11 +115,14 @@ set undofile
 " Sets how many lines of history VIM has to remember
 set history=500
 
-" Show current absolute line
+" Show current absolute line + relative numbers
 set number
+set rnu
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+inoremap <C-j> <Esc>
 
 " Fast saving
 nmap <leader>w :w!<cr>
