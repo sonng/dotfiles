@@ -249,7 +249,6 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
 " <leader>s for Rg search
 noremap <leader>s :Rg
-let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -382,3 +381,34 @@ nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 
+
+" GUI Enhancements
+" FZF Center Layout
+if has("nvim")
+    function! CreateCenteredFloatingWindow()
+            let width = min([&columns - 4, max([80, &columns - 20])])
+        let height = min([&lines - 4, max([20, &lines - 10])])
+        let top = ((&lines - height) / 2) - 1
+        let left = (&columns - width) / 2
+        let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+        let top = "╭" . repeat("─", width - 2) . "╮"
+        let mid = "│" . repeat(" ", width - 2) . "│"
+        let bot = "╰" . repeat("─", width - 2) . "╯"
+        let lines = [top] + repeat([mid], height - 2) + [bot]
+        let s:buf = nvim_create_buf(v:false, v:true)
+        call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+        call nvim_open_win(s:buf, v:true, opts)
+        set winhl=Normal:Floating
+        let opts.row += 1
+        let opts.height -= 2
+        let opts.col += 2
+        let opts.width -= 4
+        call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+        au BufWipeout <buffer> exe 'bw '.s:buf
+    endfunction
+
+    let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+else
+    let g:fzf_layout = { 'down': '20%' }
+endif
