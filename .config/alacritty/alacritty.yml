@@ -1,5 +1,6 @@
 font:
-  size: 8
+  size: 12
+  
   normal:
     family: monospace
     style: Regular
