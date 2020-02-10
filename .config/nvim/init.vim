@@ -34,8 +34,11 @@ Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'rhysd/vim-clang-format'
 Plug 'dag/vim-fish'
-Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim'
+
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
