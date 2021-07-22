@@ -36,6 +36,10 @@ Plug 'rhysd/vim-clang-format'
 Plug 'dag/vim-fish'
 Plug 'rust-lang/rust.vim'
 
+Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
+Plug 'sheerun/vim-polyglot'
+
 " Markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
@@ -111,6 +115,9 @@ let g:rust_clip_command = 'xclip -selection clipboard'
 "let g:racer_experimental_completer = 1
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
+" Elixir
+let g:mix_format_on_save = 1
+
 " Permanent undo
 set undodir=~/.vimdid
 set undofile
@@ -124,6 +131,10 @@ set rnu
 
 " Set to auto read when a file is changed from the outside
 set autoread
+
+" Show line columns
+set cursorcolumn
+set cursorline
 
 inoremap <C-j> <Esc>
 

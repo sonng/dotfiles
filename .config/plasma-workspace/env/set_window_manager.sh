@@ -1,1 +1,1 @@
-export KDEWM=/usr/bin/bspwm
+#export KDEWM=/usr/bin/bspwm
