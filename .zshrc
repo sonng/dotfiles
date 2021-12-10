@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,9 +96,6 @@ export EDITOR=$VISUAL
 
 export TERM=xterm-256color
 
-export LIBVA_DRIVER_NAME=vdpau
-export VDPAU_DRIVER=nvidia
-
 # Enable shell history for iex
 export ERL_AFLAGS="-kernel shell_history enabled"
 
@@ -120,7 +117,4 @@ alias vim='nvim'
 # For Rust
 export PATH=~/.cargo/bin:$PATH
 
-# For nvm node, npm
-source /usr/share/nvm/init-nvm.sh
 
-. $HOME/.asdf/asdf.sh
